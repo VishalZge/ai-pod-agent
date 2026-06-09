@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  ai-pod-agent:
+    build: .
+    container_name: ai-pod-agent
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - SERPAPI_KEY=${SERPAPI_KEY}
+      - GCS_PROJECT_ID=${GCS_PROJECT_ID}
+      - GCS_BUCKET_NAME=${GCS_BUCKET_NAME}
+      - GOOGLE_APPLICATION_CREDENTIALS=/app/config/service-account.json
+    volumes:
+      - ./logs:/app/logs
+      - ./config:/app/config
+    command: python main.py --continuous --interval 24
